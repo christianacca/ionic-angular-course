@@ -1,0 +1,42 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/recipes"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ vm.entity.title }}</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="delete(vm.entity)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-grid class="recipe">
+      <ion-row>
+        <ion-col class="recipe__image" size-lg="6" offset-lg="3">
+          <ion-img [src]="vm.entity.imageUrl"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="6" offset-lg="3">
+          <h1 class="ion-text-center">{{vm.entity.title}}</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="6" offset-lg="3">
+          <ion-list>
+            <ion-list-header>
+              <ion-label>Ingredients</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let ing of vm.entity.ingredients">
+              {{ing}}</ion-item
+            >
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ng-container>

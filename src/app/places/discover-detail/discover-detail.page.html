@@ -1,0 +1,31 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/places/tabs/discover"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{vm.entity?.title || 'Entity not found' }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-grid class="ion-text-center place" *ngIf="vm.entity">
+      <ion-col size-lg="6" offset-lg="3">
+        <ion-img [src]="vm.entity.imageUrl"></ion-img>
+        <p class="ion-padding-horizontal">{{vm.entity.description}}</p>
+        <ion-img
+          role="button"
+          (click)="onShowFullMap(vm.entity)"
+          [src]="vm.entity.location.staticMapImageUrl"
+        ></ion-img>
+        <ion-button
+          color="primary"
+          class="ion-margin"
+          (click)="onBook(vm.entity)"
+          *ngIf="vm.isBookable"
+          >Book</ion-button
+        >
+      </ion-col>
+    </ion-grid>
+  </ion-content>
+</ng-container>

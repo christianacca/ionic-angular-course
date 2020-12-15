@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Discover Places</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="vm$ | async as vm">
+  <ion-segment
+    (ionChange)="bookableFilter.next($event.detail.value !== 'all')"
+    value="all"
+  >
+    <ion-segment-button value="all">All Places</ion-segment-button>
+    <ion-segment-button value="bookable">Bookable Places</ion-segment-button>
+  </ion-segment>
+  <ion-grid class="ion-text-center">
+    <ion-row *ngIf="vm.featuredPlace">
+      <ion-col size-lg="8" offset-lg="2">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{vm.featuredPlace.title}}</ion-card-title>
+            <ion-card-subtitle
+              >{{vm.featuredPlace.price | currency}} / Night</ion-card-subtitle
+            >
+          </ion-card-header>
+          <ion-img [src]="vm.featuredPlace.imageUrl"></ion-img>
+          <ion-card-content>
+            {{ vm.featuredPlace.description}}
+          </ion-card-content>
+          <div>
+            <ion-button
+              color="primary"
+              fill="clear"
+              routerLink="./{{vm.featuredPlace.id}}"
+              >More</ion-button
+            >
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-lg="8" offset-lg="2">
+        <ion-list>
+          <ion-item
+            *ngFor="let place of vm.nonFeaturedPlaces"
+            routerLink="./{{place.id}}"
+            detail
+          >
+            <ion-thumbnail slot="start">
+              <ion-img [src]="place.imageUrl"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{place.title}}</h2>
+              <p>{{place.description}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

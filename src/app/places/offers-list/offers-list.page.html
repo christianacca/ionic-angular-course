@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Offers</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="./new">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-text-center" *ngIf="entities$ | async as entities">
+    <ion-row>
+      <ion-col size-lg="8" offset-lg="2">
+        <ion-list *ngIf="entities.length > 0; else empty">
+          <ion-item-sliding *ngFor="let offer of entities" #slidingItem>
+            <app-offer-item [model]="offer"></app-offer-item>
+            <ion-item-options>
+              <ion-item-option
+                color="secondary"
+                routerLink="./edit/{{offer.id}}"
+                (click)="slidingItem.close()"
+              >
+                <ion-icon
+                  name="pencil-outline"
+                  title="Edit"
+                  slot="icon-only"
+                ></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <ng-template #empty>
+          <p>No offers found. Please create one first</p>
+          <ion-button routerLink="/places/tabs/offers/new"
+            >Offer new place</ion-button
+          >
+        </ng-template>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-tabs>
+  <!-- 
+    note: having buttons in a template is a workaround for not being able to 
+    bind slot property 
+    (see: https://github.com/ionic-team/ionic-framework/issues/19484)
+  -->
+  <ion-tab-bar slot="bottom" *ngIf="isMobile">
+    <ng-container *ngTemplateOutlet="buttons"></ng-container>
+  </ion-tab-bar>
+  <ion-tab-bar slot="top" *ngIf="!isMobile" color="primary">
+    <ng-container *ngTemplateOutlet="buttons"></ng-container>
+  </ion-tab-bar>
+
+  <ng-template #buttons>
+    <ion-tab-button tab="discover">
+      <ion-label>Discover</ion-label>
+      <ion-icon name="search"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="offers">
+      <ion-label>Offers</ion-label>
+      <ion-icon name="card"></ion-icon>
+    </ion-tab-button>
+  </ng-template>
+</ion-tabs>

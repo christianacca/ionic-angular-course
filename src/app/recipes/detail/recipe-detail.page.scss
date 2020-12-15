@@ -1,0 +1,14 @@
+.recipe__image {
+  --ion-grid-column-padding: 0;
+  --ion-grid-column-padding-lg: 5px;
+  --ion-grid-column-padding-xl: 5px;
+
+  ion-img::part(image) {
+    max-height: 300px;
+  }
+}
+.recipe {
+  --ion-grid-padding: 0;
+  --ion-grid-padding-lg: 5px;
+  --ion-grid-padding-xl: 5px;
+}
