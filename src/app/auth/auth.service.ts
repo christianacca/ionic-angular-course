@@ -3,7 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject, from, Subject, timer } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, skip, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, skip, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AuthConfig } from './auth-config';
 import { User } from './user';
@@ -27,15 +27,15 @@ export class AuthService implements OnDestroy {
 
   private user = new BehaviorSubject<User>(User.unauthenticated);
   readonly currentUser$ = this.user.asObservable();
-  readonly userIsAuthenticated$ = this.currentUser$.pipe(pluck('hasValidToken'), distinctUntilChanged());
+  readonly userIsAuthenticated$ = this.currentUser$.pipe(map(u => u.hasValidToken), distinctUntilChanged());
 
   readonly logins$ = this.userIsAuthenticated$.pipe(filter(isAuth => isAuth));
   readonly logouts$ = this.userIsAuthenticated$.pipe(
     skip(1), // we start out unauthenticated, so skip this emission
     filter(isAuth => !isAuth)
   );
-  readonly token$ = this.currentUser$.pipe(pluck('token'));
-  readonly userId$ = this.currentUser$.pipe(pluck('id'));
+  readonly token$ = this.currentUser$.pipe(map(u => u.token));
+  readonly userId$ = this.currentUser$.pipe(map(u => u.id));
 
   private onDestroy = new Subject();
 
